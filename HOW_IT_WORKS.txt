@@ -1,0 +1,77 @@
+================================================================
+          OTT AGENT - PROJECT ARCHITECTURE & WORKFLOW
+================================================================
+
+1. INTRODUCTION
+----------------
+This is an intelligent Admin Dashboard for an OTT (Over-The-Top) streaming
+platform (like Netflix). Its primary goal is to use Artificial Intelligence 
+to identify users who are about to cancel their subscription ("Churn") and 
+automatically suggest specific actions to retain them.
+
+2. TECHNOLOGY STACK
+--------------------
+[FRONTEND] -> User Interface
+- React.js (Vite): Fast, modern component-based UI.
+- Tailwind CSS: For the premium "Glassmorphism" dark-mode look.
+- Axios: To communicate with the backend API.
+- Chart.js: To render the beautiful donut charts on the dashboard.
+
+[BACKEND] -> Logic & AI
+- Node.js & Express: Handles API requests.
+- TensorFlow.js: The AI library used to build and run the neural network.
+
+[DATABASE] -> Storage
+- MongoDB Atlas: Cloud database storing User profiles and Prediction history.
+- Mongoose: Library to interact with the database.
+
+3. THE AI ENGINE (The "Brain")
+------------------------------
+The core intelligence lives in `backend/ml/churnModel.js`.
+
+- MODEL TYPE: Sequential Neural Network (Deep Learning).
+- INPUTS (3 Key Features):
+  1. Last Active Days: How many days since the user logged in?
+  2. Watch Hours: Average hours of content watched per week.
+  3. Payment Delay: How late are they paying their bills?
+
+- THE PROCESS:
+  1. Data matches specific patterns (e.g., High delay + Low watch time).
+  2. The Neural Network processes this through 3 layers of "neurons".
+  3. It outputs a Probability Score (0.0 to 1.0).
+
+- CLASSIFICATION:
+  - 0% - 40%  : LOW RISK    (Loyal User)
+  - 40% - 70% : MEDIUM RISK (At Risk of leaving)
+  - 70% - 100%: HIGH RISK   (Immediate Churn Danger)
+
+4. END-TO-END DATA FLOW
+------------------------
+
+[STEP 1: LOGIN]
+- Admin logs in with secure credentials.
+- System validates against hardcoded admin check for security.
+
+[STEP 2: DASHBOARD LOAD]
+- The frontend requests `/api/dashboard-stats`.
+- Backend queries MongoDB to count Total Users and calculates Churn Distribution.
+- The Pie Chart renders using this real-time data.
+
+[STEP 3: PREDICTION (The Magic Moment)]
+- Admin goes to "All Users" and clicks "Predict" on a specific user.
+- Frontend sends user metrics to the Backend.
+- Backend feeds these numbers into the TensorFlow Model.
+- The Model returns a Risk Score (e.g., "82% - HIGH").
+- This result is SAVED to the database for future tracking.
+
+[STEP 4: PERSONALIZED ACTION]
+- Based on the AI's result, the system recommends a strategy:
+  - HIGH RISK?   -> Generate a 50% Discount Coupon.
+  - MEDIUM RISK? -> Send a "We Miss You" notification.
+  - LOW RISK?    -> Suggest upgrading to a Premium 4K plan.
+
+5. WHY THIS MATTER (Hackathon Pitch)
+-------------------------------------
+- It is NOT just a static website; it connects a real Database to real AI.
+- It solves a massive business problem: Customer Retention.
+- It is fully automated: Data -> AI -> Actionable Insight.
