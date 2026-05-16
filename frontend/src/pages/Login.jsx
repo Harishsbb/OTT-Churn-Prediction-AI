@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import logo from '../assets/logo.png';
+import { Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
@@ -23,6 +26,9 @@ const Login = () => {
     return (
         <div className="h-screen w-full flex items-center justify-center bg-slate-950">
             <div className="w-full max-w-md bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl">
+                <div className="flex justify-center mb-6">
+                    <img src={logo} alt="ByteQuest Logo" className="w-20 h-20 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]" />
+                </div>
                 <h2 className="text-3xl font-bold text-center mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                     Welcome Back
                 </h2>
@@ -43,13 +49,22 @@ const Login = () => {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="input-field"
-                            placeholder="••••••••"
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="input-field pr-12"
+                                placeholder="••••••••"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" className="w-full btn-primary py-3 text-lg font-semibold shadow-lg shadow-blue-600/20">
                         Sign In
