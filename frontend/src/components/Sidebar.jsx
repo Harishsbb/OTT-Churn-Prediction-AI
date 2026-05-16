@@ -10,7 +10,7 @@ const Sidebar = () => {
         { name: 'All Users', path: '/users', icon: Users },
         { name: 'Add User', path: '/add-user', icon: UserPlus },
         { name: 'Predict Churn', path: '/predict', icon: BrainCircuit },
-        { name: 'Actions', path: '/actions/general', icon: Activity },
+        { name: 'Actions', path: '/action', icon: Activity },
     ];
 
     const isActive = (path) => location.pathname === path;
