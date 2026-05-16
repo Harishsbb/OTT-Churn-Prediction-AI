@@ -17,10 +17,10 @@ mongoose.connect(process.env.MONGODB_URI)
 trainModel();
 
 // Routes
-app.use('/api', require('./routes/auth'));
-app.use('/api', require('./routes/users'));
-app.use('/api', require('./routes/churn'));
-app.use('/api', require('./routes/dashboard'));
+app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/users'));
+app.use('/', require('./routes/churn'));
+app.use('/', require('./routes/dashboard'));
 
 const PORT = process.env.PORT || 5000;
 if (process.env.NODE_ENV !== 'production') {
